@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ session['user'] }}</h2>
+
+        <!-- Form for Deposit, Withdraw, and Check Balance -->
+        <form action="/" method="post">
+            <input type="text" name="amount" placeholder="Enter amount">
+            <button type="submit" name="action" value="Check Balance">Check Balance</button>
+            <button type="submit" name="action" value="Deposit">Deposit</button>
+            <button type="submit" name="action" value="Withdraw">Withdraw</button>
+        </form>
+
+        <!-- Flash messages for feedback -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Current Balance at the Bottom -->
+        <div class="balance">Current Balance: Rs {{ balance }}</div>
+
+        <!-- Logout Button -->
+        <form action="{{ url_for('logout') }}" method="get">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+</body>
+</html>
